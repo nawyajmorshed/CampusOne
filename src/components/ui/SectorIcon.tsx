@@ -1,100 +1,83 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, type ViewStyle } from 'react-native';
+import { View, StyleSheet, type ViewStyle } from 'react-native';
 import { useTheme } from '../../hooks/useTheme';
-import { SectorColors, Radius, FontFamily, FontSize, Spacing } from '../../theme';
+import { Icon } from './Icon';
+import { SectorColors } from '../../theme';
 import type { SectorKey } from '../../theme';
 
-const SECTOR_EMOJI: Record<SectorKey, string> = {
-  reports: '🔧',
-  lostfound: '🔍',
-  events: '🎉',
-  announcements: '📢',
-  blood: '🩸',
-  bus: '🚌',
-  jobs: '💼',
-  marketplace: '🛒',
-  rides: '🚗',
-  directory: '👥',
-  medical: '🏥',
-  prayer: '🕌',
-  clubs: '🎭',
-  studyhub: '📚',
-  faculty: '👨‍🏫',
+// Icon name per sector — matches design data.jsx
+const SECTOR_ICON: Record<SectorKey, string> = {
+  reports:   'report',
+  lostfound: 'found',
+  clubs:     'clubs',
+  events:    'events',
+  jobs:      'jobs',
+  announce:  'announce',
+  study:     'study',
+  bus:       'bus',
+  medical:   'medical',
+  market:    'market',
+  ride:      'ride',
+  blood:     'blood',
+  directory: 'directory',
+  prayer:    'moon',
+  faculty:   'faculty',
 };
 
-const SECTOR_LABEL: Record<SectorKey, string> = {
-  reports: 'Reports',
-  lostfound: 'Lost & Found',
-  events: 'Events',
-  announcements: 'Notice',
-  blood: 'Blood',
-  bus: 'Bus',
-  jobs: 'Jobs',
-  marketplace: 'Market',
-  rides: 'Rides',
-  directory: 'Directory',
-  medical: 'Medical',
-  prayer: 'Prayer',
-  clubs: 'Clubs',
-  studyhub: 'Study Hub',
-  faculty: 'Faculty',
-};
+const SIZE_MAP = { sm: 32, md: 42, lg: 58 } as const;
+const ICON_SIZE_MAP = { sm: 17, md: 22, lg: 30 } as const;
+const RADIUS_MAP = { sm: 10, md: 13, lg: 18 } as const;
+
+type SecSize = 'sm' | 'md' | 'lg';
 
 interface SectorIconProps {
   sector: SectorKey;
-  onPress?: () => void;
-  size?: number;
-  showLabel?: boolean;
+  size?: SecSize;
+  dark?: boolean;
   style?: ViewStyle;
 }
 
-export function SectorIcon({ sector, onPress, size = 56, showLabel = true, style }: SectorIconProps) {
-  const { C } = useTheme();
-  const color = SectorColors[sector];
-  const iconBg = color + '20'; // 12% opacity
-
-  const content = (
-    <View style={[styles.wrapper, style]}>
-      <View
-        style={[
-          styles.iconBox,
-          {
-            width: size,
-            height: size,
-            borderRadius: size * 0.32,
-            backgroundColor: iconBg,
-          },
-        ]}
-      >
-        <Text style={{ fontSize: size * 0.44 }}>{SECTOR_EMOJI[sector]}</Text>
-      </View>
-      {showLabel ? (
-        <Text
-          style={[
-            styles.label,
-            { color: C.textSecondary, fontFamily: FontFamily.jakartaMedium, fontSize: FontSize.xs },
-          ]}
-          numberOfLines={1}
-        >
-          {SECTOR_LABEL[sector]}
-        </Text>
-      ) : null}
-    </View>
-  );
-
-  if (onPress) {
-    return (
-      <TouchableOpacity onPress={onPress} activeOpacity={0.72}>
-        {content}
-      </TouchableOpacity>
-    );
-  }
-
-  return content;
+function lightenHex(hex: string): string {
+  const n = parseInt(hex.slice(1), 16);
+  let r = (n >> 16) & 255, g = (n >> 8) & 255, b = n & 255;
+  r = Math.round(r + (255 - r) * 0.32);
+  g = Math.round(g + (255 - g) * 0.32);
+  b = Math.round(b + (255 - b) * 0.32);
+  return `rgb(${r},${g},${b})`;
 }
 
-const styles = StyleSheet.create({
-  wrapper: { alignItems: 'center', gap: 6 } as ViewStyle,
-  iconBox: { alignItems: 'center', justifyContent: 'center' } as ViewStyle,
-  label: { textAlign: 'center', maxWidth: 70 } as any,
-});
+function hexWithAlpha(hex: string, alpha: number): string {
+  const n = parseInt(hex.slice(1), 16);
+  const r = (n >> 16) & 255;
+  const g = (n >> 8) & 255;
+  const b = n & 255;
+  return `rgba(${r},${g},${b},${alpha})`;
+}
+
+export function SectorIcon({ sector, size = 'md', dark = false, style }: SectorIconProps) {
+  const baseFg = SectorColors[sector];
+  const fg = dark ? lightenHex(baseFg) : baseFg;
+  const bg = hexWithAlpha(baseFg, dark ? 0.18 : 0.12);
+
+  const dim = SIZE_MAP[size];
+  const iconSize = ICON_SIZE_MAP[size];
+  const radius = RADIUS_MAP[size];
+
+  return (
+    <View
+      style={[
+        {
+          width: dim,
+          height: dim,
+          borderRadius: radius,
+          backgroundColor: bg,
+          alignItems: 'center',
+          justifyContent: 'center',
+        },
+        style,
+      ]}
+    >
+      <Icon name={SECTOR_ICON[sector]} size={iconSize} color={fg} />
+    </View>
+  );
+}
