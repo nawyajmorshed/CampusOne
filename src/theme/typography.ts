@@ -4,11 +4,17 @@
 
 export const FontFamily = {
   // English — Plus Jakarta Sans (loaded via expo-font)
-  regular:     'PlusJakartaSans_400Regular',
-  medium:      'PlusJakartaSans_500Medium',
-  semiBold:    'PlusJakartaSans_600SemiBold',
-  bold:        'PlusJakartaSans_700Bold',
-  extraBold:   'PlusJakartaSans_800ExtraBold',
+  regular:            'PlusJakartaSans_400Regular',
+  medium:             'PlusJakartaSans_500Medium',
+  semiBold:           'PlusJakartaSans_600SemiBold',
+  bold:               'PlusJakartaSans_700Bold',
+  extraBold:          'PlusJakartaSans_800ExtraBold',
+  // Aliases used across components
+  jakartaRegular:     'PlusJakartaSans_400Regular',
+  jakartaMedium:      'PlusJakartaSans_500Medium',
+  jakartaSemiBold:    'PlusJakartaSans_600SemiBold',
+  jakartaBold:        'PlusJakartaSans_700Bold',
+  jakartaExtraBold:   'PlusJakartaSans_800ExtraBold',
 
   // Bengali — Hind Siliguri (loaded via expo-font)
   bnRegular:   'HindSiliguri_400Regular',

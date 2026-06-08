@@ -1,6 +1,5 @@
 // ─────────────────────────────────────────────────────────────────────────────
-// CampusOne — Color Tokens
-// Single source of truth. Change here → changes everywhere in the app.
+// CampusOne — Color Tokens (source of truth — matches design_handoff_campusone)
 // ─────────────────────────────────────────────────────────────────────────────
 
 export const LightColors = {
@@ -9,11 +8,13 @@ export const LightColors = {
   brand700: '#1f47c4',
   brand50:  '#eef3ff',
   brand100: '#dde7ff',
+  brandMuted: '#eef3ff',  // alias for brand50
 
   // Backgrounds
   bg:       '#f5f7fb',
   surface:  '#ffffff',
   surface2: '#eef2f8',
+  surfaceAlt: '#eef2f8',  // alias for surface2
   surface3: '#e6ebf3',
 
   // Borders
@@ -21,9 +22,11 @@ export const LightColors = {
   border2: '#d4dce8',
 
   // Text
-  text:  '#0f1a2e',
-  text2: '#46536e',
-  text3: '#8693aa',
+  text:          '#0f1a2e',
+  text2:         '#46536e',
+  textSecondary: '#46536e',  // alias for text2
+  text3:         '#8693aa',
+  textMuted:     '#8693aa',  // alias for text3
 
   // Semantic — Success
   success:   '#12915e',
@@ -33,11 +36,13 @@ export const LightColors = {
   warn:   '#b9760a',
   warnBg: '#fbefdb',
 
-  // Semantic — Danger
+  // Semantic — Danger / Error
   danger:   '#d63d35',
   dangerBg: '#fbe7e5',
+  error:    '#d63d35',  // alias for danger
+  errorBg:  '#fbe7e5',
 
-  // Semantic — Info (same as brand)
+  // Semantic — Info (brand-tinted)
   info:   '#2b5be3',
   infoBg: '#eef3ff',
 
@@ -53,73 +58,70 @@ export const LightColors = {
 };
 
 export const DarkColors: typeof LightColors = {
-  // Brand
   brand:    '#6a8cf2',
   brand700: '#8aa4f7',
   brand50:  '#1a2340',
   brand100: '#222d4e',
+  brandMuted: '#1a2340',
 
-  // Backgrounds
   bg:       '#0a0f1c',
   surface:  '#111829',
   surface2: '#182034',
+  surfaceAlt: '#182034',
   surface3: '#202a42',
 
-  // Borders
   border:  '#232f48',
   border2: '#2e3b58',
 
-  // Text
-  text:  '#e9eefb',
-  text2: '#a4b1cc',
-  text3: '#6c7a99',
+  text:          '#e9eefb',
+  text2:         '#a4b1cc',
+  textSecondary: '#a4b1cc',
+  text3:         '#6c7a99',
+  textMuted:     '#6c7a99',
 
-  // Semantic — Success
   success:   '#36c98a',
   successBg: '#0d2e20',
 
-  // Semantic — Warning
   warn:   '#e0a23c',
   warnBg: '#2e1e05',
 
-  // Semantic — Danger
   danger:   '#f0685e',
   dangerBg: '#2e0d0b',
+  error:    '#f0685e',
+  errorBg:  '#2e0d0b',
 
-  // Semantic — Info
   info:   '#6a8cf2',
   infoBg: '#1a2340',
 
-  // Role accent colors
   roleStudent: '#6a8cf2',
   roleStaff:   '#e0a23c',
   roleAdmin:   '#36c98a',
 
-  // Utility
   white: '#ffffff',
   black: '#000000',
   transparent: 'transparent',
 };
 
 // ─────────────────────────────────────────────────────────────────────────────
-// Sector icon colors — one unique color per campus feature
+// Sector colors — exact fg values from design data.jsx
+// IDs match the design exactly: 'announce' not 'announcements', 'study' not 'studyhub', etc.
 // ─────────────────────────────────────────────────────────────────────────────
 export const SectorColors = {
-  reports:      '#e05c2d',
-  lostfound:    '#c49a14',
-  events:       '#7c3abf',
-  announcements:'#1a6dbf',
-  blood:        '#c7344a',
-  bus:          '#1e8c5a',
-  jobs:         '#2b7abd',
-  marketplace:  '#d4720c',
-  rides:        '#1b7a9e',
-  directory:    '#4a7fc1',
-  medical:      '#2e9e6e',
-  prayer:       '#1f8a5b',
-  clubs:        '#9b3dbf',
-  studyhub:     '#2ba0c9',
-  faculty:      '#5a6abf',
+  reports:   '#4f6bed',
+  lostfound: '#c77d1a',
+  clubs:     '#8b5cf0',
+  events:    '#e0568a',
+  jobs:      '#0e9c8a',
+  announce:  '#3e7de0',
+  study:     '#2ba0c9',
+  bus:       '#e08a2b',
+  medical:   '#e2483d',
+  market:    '#2e9e63',
+  ride:      '#6e8b1f',
+  blood:     '#c7344a',
+  directory: '#5b6b86',
+  prayer:    '#1f8a5b',
+  faculty:   '#0e9c8a',
 } as const;
 
 export type SectorKey = keyof typeof SectorColors;
